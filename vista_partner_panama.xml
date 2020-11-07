@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+    	<!-- Vista Arbol-->
+		<record id="anexos_conceptos_tree" model="ir.ui.view">
+			<field name="name">anexos.conceptos.tree</field>
+			<field name="model">anexosconceptos</field>
+			<field name="arch" type="xml">
+				<tree string="Lista de Conceptos de Anexos (Panama)">
+					<field name="name"/>
+					<field name="concepto"/>
+					<field name="codigo_tipo_pago"/>
+					<field name="anexo"/>
+				</tree>	
+			</field>
+		</record>
+		<!-- Vista Formulario de Anexos Conceptos -->
+		<record id="anexos_conceptos_form" model="ir.ui.view">
+			<field name="name">anexos.conceptos.form</field>
+			<field name="model">anexosconceptos</field>
+			<field name="arch" type="xml">
+				<form string="Formulario de Conceptos de Anexos (Panama)">
+				    <header>
+				        <group>
+				        	<button name="anexo"/>
+				        </group>
+				    </header>
+				    <sheet>
+				        <group>
+							<field name="name"/>
+							<field name="concepto"/>
+							<field name="codigo_tipo_pago"/>
+							<field name="anexo"/>
+						</group>
+					</sheet>
+				</form>	
+			</field>
+		</record>
+		<!-- Formulario res_partner heredado mas campos nuevos -->
+		<record model="ir.ui.view" id="res_partner_form_view_inh">
+			<field name="name">res.partner.form.view.inh</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="DGI Panamá">
+						<group col="2" colspan="2">
+							<separator string="Datos Fiscales" colspan="2"/>
+								<field string="R.U.C." name="ruc" placeholder="RUC" label="RUC"/>
+								<field name="dv" placeholder="DV"/>
+								<field name="tipo_persona" placeholder="Tipo Persona" options='{"no_open": True}'/>
+                                <field name="concepto" widget="many2one_tags" placeholder="Seleccione Conceptos por Default"/>
+						</group>
+					</page>
+			</notebook>
+			</field>
+		</record>
+		
+		<!-- Formulario view_invoice_line_form heredado mas campos nuevos 
+		<record model="ir.ui.view" id="view_invoice_line_form_view_inh">
+      		<field name="name">view.invoice.line.form.view.inh</field>
+      		<field name="model">account.invoice.line</field>
+      		<field name="type">form</field>
+      		<field name="inherit_id" ref="account.view_invoice_line_form" />
+      		<field name="arch" type="xml">
+         	<field name="invoice_line_tax_ids" position="after">
+         		<field name="concepto" widget="many2many_tags" placeholder="Seleccione Conceptos Anexos"/>     
+         	</field>
+   			</field>
+   		</record>
+		-->
+		<!-- Formulario account.invoice.supplier.form heredado mas campos nuevos -->
+		<record model="ir.ui.view" id="invoice_supplier_form_view_inh">
+      		<field name="name">account.invoice.supplier.form.view.inh</field>
+      		<field name="model">account.invoice</field>
+      		<field name="type">form</field>
+      		<field name="inherit_id" ref="account.invoice_supplier_form" />
+      		<field name="arch" type="xml">
+		        <data>
+		        	<!--    
+                	<field name="product_id" position="replace"/>
+		            <field name="sequence" position="after">
+	                    <field name="product_id"
+                        on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, parent.company_id, context)"/>
+	                     
+					<field name="product_id"
+                        on_change="account_anexos.product_id_change2(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, parent.company_id, context)"
+                        placeholder="Item?"/>
+						                    
+		            </field>
+		            -->
+	        		<field name="invoice_line_tax_ids" position="after">
+	         			<field name="concepto" widget="many2one_tags" placeholder="Seleccione Conceptos"/>     
+	         		</field>
+		        </data>         	
+   			</field>
+   		</record>
+
+		<!-- Acciones -->
+		<record id="anexos_conceptos_action" model="ir.actions.act_window">
+			<field name="name">Conceptos de Anexos Panama</field>
+			<field name="res_model">anexosconceptos</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- Menúes -->
+		<menuitem id="anexos_conceptos_menu"
+		    parent="account.menu_finance"
+		    name="DGI Panamá"
+            groups="account.group_account_user,account.group_account_manager,account.group_account_invoice"
+            web_icon="partner_panama,static/description/icon.png"
+            sequence="40"/>
+
+		<menuitem id="anexos_conceptos_menu_action"
+		    parent="anexos_conceptos_menu"
+		    name="Conceptos de Anexos Renta/Informes"
+		    sequence="0"
+			action="anexos_conceptos_action"/>
+	</data>
+</odoo>

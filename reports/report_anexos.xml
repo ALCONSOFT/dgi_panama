@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Vista Busqueda-->
+        <record model="ir.ui.view" id="view_report_anexos_search">
+            <field name="name">report.anexos.search</field>
+            <field name="model">report.anexos_consolidados</field>
+            <field name="arch" type="xml">
+                <search string="Reporte de Anexos Consolidados DGI Panamá v19-04-21">
+                	<!--<group expand="1" string="Group By">
+                		<filter name="group_periodo_fiscal" string="Periodo Fiscal" context="{'group_by':'periodo_fiscal'}"/>
+                		<filter name="group_anexo" string="Anexo" context="{'group_by':'anexo'}"/>
+                	</group>-->
+                	<field name="anio"/>
+                    <field name="anexo" string="Anexo"  />
+                	<field name="tipo_persona"/>
+                    <field name="ruc"/>
+                    <field name="dv"/>
+                    <field name="nombre_proveedor"/>
+                    <field name="codigo_tipo_pago"/>
+                    <field name="concepto"/>
+                    <field name="montos"/>
+                    <field name="periodo_fiscal"/>
+                    <!--<field name="name"/> -->
+                   	<!--<filter name="filteranexo94" string="Filtro Anexo 94" domain="[('anexo', 'ilike', 'A94'),('anexo', 'ilike', 'A72'),('anexo', 'ilike', 'A79'),('anexo', 'ilike', 'F43')]"/>-->
+                </search>
+            </field>
+        </record>
+        <!-- Vista lista-->
+        <record model="ir.ui.view" id="view_report_anexos_tree">
+            <field name="name">report.anexos.tree</field>
+            <field name="model">report.anexos_consolidados</field>
+            <field name="arch" type="xml">
+                <tree string="Lista de Anexos Consolidados DGI Panamá v19-04-21">
+                	<field name="anio"/>
+                    <field name="anexo" string="Anexo"  />
+                	<field name="tipo_persona"/>
+                    <field name="ruc"/>
+                    <field name="dv"/>
+                    <field name="nombre_proveedor"/>
+                    <field name="codigo_tipo_pago"/>
+                    <field name="concepto"/>
+                    <field name="montos"/>
+                    <field name="periodo_fiscal"/>
+               </tree>
+            </field>
+        </record>
+         
+		<!-- Acciones <field name="search_view_id" ref="view_report_anexos_search"></field>-->
+		<record id="report_anexos_action" model="ir.actions.act_window">
+			<field name="name">Reporte de Anexos Consolidados</field>
+			<field name="res_model">report.anexos_consolidados</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_filteranexo94':1}</field>
+		</record>
+		<!-- Menúes -->
+		<menuitem id="report_anexos_menu_action"
+		    parent="anexos_conceptos_menu"
+		    name="Reporte de Anexos Consolidados"
+		    sequence="10"
+			action="report_anexos_action"/>
+     </data>
+</openerp>
+        
